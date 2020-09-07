@@ -23,8 +23,9 @@ window.addEventListener('load', () =>{
   let dragging = false;
   
   // Functions
-  function startPosition(){
+  function startPosition(e){
     dragging = true;
+    drag(e)
   }
   
   function finishedPosition(){
