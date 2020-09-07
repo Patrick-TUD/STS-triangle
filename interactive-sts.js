@@ -1,9 +1,11 @@
 window.addEventListener('load', () =>{
   console.log('Hello.')
+  const canvas = document.getElementByID("sandbox");
+  const ctx = canvas.getContext('2d');
+  
+  // Resizing
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  ctx.fillRect(20, 20, 20, 80);
 });
-
-// const canvas = document.getElementByID("sandbox");
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-
-// const ctx = canvas.getContext('2d');
