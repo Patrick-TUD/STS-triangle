@@ -1,11 +1,15 @@
+function resizeCanvas(){
+  // Resizing
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
 window.addEventListener('load', () =>{
   console.log('Hello v2.')
   const canvas = document.querySelector("#canvas");
   const ctx = canvas.getContext('2d');
   
-  // Resizing
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  resizeCanvas();
   
   // Example shapes
   ctx.strokeStyle = "blue";
@@ -49,3 +53,5 @@ window.addEventListener('load', () =>{
   canvas.addEventListener('mouseup', finishedPosition);
   canvas.addEventListener('mousemove', drag);
 });
+
+window.addEventListener('resize', resizeCanvas);
