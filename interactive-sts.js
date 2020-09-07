@@ -1,6 +1,6 @@
 window.addEventListener('load', () =>{
   console.log('Hello v2.')
-  const canvas = document.getElementByID("sandbox");
+  const canvas = document.querySelector("#canvas");
   const ctx = canvas.getContext('2d');
   
   // Resizing
