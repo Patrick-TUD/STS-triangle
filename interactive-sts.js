@@ -1,5 +1,5 @@
 window.addEventListener('load', () =>{
-  console.log('Hello.')
+  console.log('Hello v2.')
   const canvas = document.getElementByID("sandbox");
   const ctx = canvas.getContext('2d');
   
