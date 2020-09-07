@@ -29,6 +29,7 @@ window.addEventListener('load', () =>{
   
   function finishedPosition(){
     dragging = false;
+    ctx.beginPath();
   }
   
   function drag(e){
@@ -38,6 +39,8 @@ window.addEventListener('load', () =>{
     
     ctx.lineTo(e.clientX, e.clientY);
     ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX, e.clientY);
   }
   
   // EventListeners
