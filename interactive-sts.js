@@ -213,7 +213,7 @@ function drawTriangle(){
 }
 
 function drawSTSGraphs(){
-  let base_height = canvas.height-15;
+  let base_height = Math.floor(canvas.height / 2) + 220;
   let h_spacing = 100;
   let social_center = cx - h_spacing;
   let technology_center = cx;
