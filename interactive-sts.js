@@ -173,6 +173,7 @@ function drag(e){
     service_dis = distance_to_line(mouse_x, mouse_y, ax, ay, cx, cy) / height;
     updateParamValues();
     updateCanvas();
+    ctx.strokeStyle = '#888888';
     ctx.arc(mouse_x, mouse_y, 5, 0, Math.PI * 2, false);
     ctx.lineWidth = 2;
     ctx.stroke();
@@ -249,7 +250,7 @@ function drawTriangle(){
   ctx.moveTo(triangle_center, triangle_base_height);
   ctx.lineTo(cx, cy);
   ctx.lineWidth = 1;
-  ctx.strokeStyle = '#999999';
+  ctx.strokeStyle = '#DDDDDD';
   ctx.stroke();
 
   ctx.beginPath();
