@@ -12,28 +12,29 @@ let parameter_graph_count = 22;
 let parameter_graphs_per_line = parameter_graph_count/2;
 
 const graph_properties = [];
-graph_properties[0] = ["darkolivegreen", "K_GOAL"];
-graph_properties[1] = ["darkolivegreen", "A_PED"];
-graph_properties[2] = ["darkolivegreen", "B_PED"];
-graph_properties[3] = ["darkolivegreen", "A_OBS"];
-graph_properties[4] = ["darkolivegreen", "B_OBS"];
-graph_properties[5] = ["darkolivegreen", "L"];
-graph_properties[6] = ["orange", "HORIZON"];
-graph_properties[7] = ["orange", "TIME_STEP"];
-graph_properties[8] = ["orange", "POLICY_ELECTION_CYCLE"];
-graph_properties[9] = ["orange", "ALPHA"];
-graph_properties[10] = ["orange", "MIN_FOLLOW_DISTANCE"];
-graph_properties[11] = ["purple", "V_MAX"];
-graph_properties[12] = ["steelblue", "PASS_LENGTH"];
-graph_properties[13] = ["steelblue", "PASS_WIDTH"];
-graph_properties[14] = ["steelblue", "PASS_STRENGTH"];
-graph_properties[15] = ["steelblue", "PASS_ANGLE_BIAS"];
-graph_properties[16] = ["steelblue", "PASS_FACING_ANGLE_MARGIN"];
-graph_properties[17] = ["darkred", "CROSS_LENGTH"];
-graph_properties[18] = ["darkred", "CROSS_DEGS"];
-graph_properties[19] = ["darkred", "CROSS_SLOW_STRENGTH"];
-graph_properties[20] = ["darkred", "CROSS_SIDE_STRENGTH"];
-graph_properties[21] = ["darkred", "CROSS_FACING_ANGLE_MARGIN"];
+// [0; color, 1; name, 2; base value, 3; social factor, 4; technology factor, 5; service factor]
+graph_properties[0] = ["darkolivegreen", "K_GOAL", 0.4, 0, 0.3, 0.3];
+graph_properties[1] = ["darkolivegreen", "A_PED", 0, 0.8, 0.2, 0];
+graph_properties[2] = ["darkolivegreen", "B_PED", 0, 0.6, 0.3, 0.1];
+graph_properties[3] = ["darkolivegreen", "A_OBS", 0.5, -0.4, 0.2, 0.3];
+graph_properties[4] = ["darkolivegreen", "B_OBS", 0.5, -0.4, 0.3, 0.2];
+graph_properties[5] = ["darkolivegreen", "L", 0.2, 0.8, -0.1, -0.1];
+graph_properties[6] = ["orange", "HORIZON", 0.5, 0.5, -0.1, -0.1];
+graph_properties[7] = ["orange", "TIME_STEP", 0.5, 0.5, -0.3, -0.2];
+graph_properties[8] = ["orange", "POLICY_ELECTION_CYCLE", 1, -0.1, -0.8, -0.8];
+graph_properties[9] = ["orange", "ALPHA", 0.5, -0.5, 0.5, 0];
+graph_properties[10] = ["orange", "MIN_FOLLOW_DISTANCE", 0.4, 0.6, 0, 0];
+graph_properties[11] = ["purple", "V_MAX", 0.6, -0.3, -0.2, 0.4];
+graph_properties[12] = ["steelblue", "PASS_LENGTH", 0, 0.8, 0.1, 0.1];
+graph_properties[13] = ["steelblue", "PASS_WIDTH", 0.2, 0.6, 0.1, 0.1];
+graph_properties[14] = ["steelblue", "PASS_STRENGTH", 0.3, 0.6, 0.1, 0.1];
+graph_properties[15] = ["steelblue", "PASS_ANGLE_BIAS", 0.5, 0.4, 0.1, 0.1];
+graph_properties[16] = ["steelblue", "PASS_FACING_ANGLE_MARGIN", 0.7, 0.3, -0.2, -0.2];
+graph_properties[17] = ["darkred", "CROSS_LENGTH", 0.3, 0.8, -0.3, -0.3];
+graph_properties[18] = ["darkred", "CROSS_DEGS", 0.5, 0.5, -0.2, 0,2];
+graph_properties[19] = ["darkred", "CROSS_SLOW_STRENGTH", 0.6, 0.4, -0.4, -0.4];
+graph_properties[20] = ["darkred", "CROSS_SIDE_STRENGTH", 0.7, 0.3, -0.2, -0.2];
+graph_properties[21] = ["darkred", "CROSS_FACING_ANGLE_MARGIN", 0.7, 0.3, -0.1, -0.1];
 
 // ########### TOOLBOX FUNCTIONS ################
 function point_in_triangle(px,py,ax,ay,bx,by,cx,cy){
@@ -106,7 +107,7 @@ function init(){
   canvas.style.top = "110px";
 
   for (let i = 0; i < parameter_graph_count; i++){
-    paramgraphs.push(new ParamGraph(graph_properties[i][1], 0, 0, graph_properties[i][0]));
+    paramgraphs.push(new ParamGraph(graph_properties[i][1], 0, 0, graph_properties[i][0], graph_properties[i][2], graph_properties[i][3], graph_properties[i][4], graph_properties[i][5]));
   }
 
   resizeCanvas();
@@ -170,6 +171,7 @@ function drag(e){
     technology_dis = distance_to_line(mouse_x, mouse_y, ax, ay, bx, by) / height;
     social_dis = distance_to_line(mouse_x, mouse_y, cx, cy, bx, by) / height;
     service_dis = distance_to_line(mouse_x, mouse_y, ax, ay, cx, cy) / height;
+    updateParamValues();
     updateCanvas();
     ctx.arc(mouse_x, mouse_y, 5, 0, Math.PI * 2, false);
     ctx.lineWidth = 2;
@@ -271,7 +273,20 @@ function drawSTSGraphs(){
   let bar_width = 20;
   let bar_height = 100;
 
-  ctx.font = '12px "Arial"';
+  ctx.fillStyle = "#d9f2d9";
+  ctx.fillRect(social_center-1, base_height-30-bar_height, 2, bar_height);
+  ctx.fillStyle = "green";
+  ctx.fillRect(social_center-bar_width/2, base_height-30-bar_height*social_dis, bar_width, bar_height*social_dis);
+  ctx.fillStyle = "#CCCCFF";
+  ctx.fillRect(technology_center-1, base_height-30-bar_height, 2, bar_height);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(technology_center-bar_width/2, base_height-30-bar_height*technology_dis, bar_width, bar_height*technology_dis);
+  ctx.fillStyle = "#FFCCCC";
+  ctx.fillRect(service_center-1, base_height-30-bar_height, 2, bar_height);
+  ctx.fillStyle = "red";
+  ctx.fillRect(service_center-bar_width/2, base_height-30-bar_height*service_dis, bar_width, bar_height*service_dis);
+
+  ctx.font = '16px "Arial"';
   ctx.fillStyle = "blue";
   ctx.textBaseline = "bottom";
   ctx.textAlign = "center";
@@ -284,15 +299,10 @@ function drawSTSGraphs(){
   ctx.fillText("Social", social_center, base_height);
   ctx.fillText(social_dis.toFixed(3), social_center, base_height-40-bar_height*social_dis);
 
-  ctx.fillStyle = "green";
-  ctx.fillRect(social_center-bar_width/2, base_height-30-bar_height*social_dis, bar_width, bar_height*social_dis);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(technology_center-bar_width/2, base_height-30-bar_height*technology_dis, bar_width, bar_height*technology_dis);
-  ctx.fillStyle = "red";
-  ctx.fillRect(service_center-bar_width/2, base_height-30-bar_height*service_dis, bar_width, bar_height*service_dis);
+
 }
 
-function ParamGraph(name, xpos, ypos, color){
+function ParamGraph(name, xpos, ypos, color, base, social_val, technology_val, service_val){
   this.name = name;
   this.xpos = xpos;
   this.ypos = ypos;
@@ -300,9 +310,17 @@ function ParamGraph(name, xpos, ypos, color){
   this.bar_width = 20;
   this.bar_height = 100;
   this.value = 0.500;
+  this.base = base;
+  this.social_val = social_val;
+  this.technology_val = technology_val;
+  this.service_val = service_val;
 
   this.draw = function(){
+    ctx.font = '13px "Arial"';
     ctx.fillStyle = this.color;
+    ctx.globalAlpha = 0.3;
+    ctx.fillRect(this.xpos-1, this.ypos-this.bar_height, 2, this.bar_height);
+    ctx.globalAlpha = 1;
     ctx.fillRect(this.xpos-this.bar_width/2, this.ypos-this.value*this.bar_height, this.bar_width, this.bar_height*this.value);
     ctx.save();
     ctx.translate(this.xpos+5, this.ypos+15);
@@ -318,17 +336,28 @@ function ParamGraph(name, xpos, ypos, color){
     this.xpos = xpos;
     this.ypos = ypos;
   }
+
+  this.updateValue = function(){
+    this.value = this.base + social_dis*this.social_val + technology_dis*this.technology_val + service_dis*this.service_val;
+  }
 }
 
 function drawParamGraphs() {
   for (let i = 0; i < paramgraphs.length; i++){
     // console.log(i + " " + paramgraphs[i].value);
-    paramgraphs[i].value = Math.random();
+    // paramgraphs[i].value = Math.random();
     // console.log(i + " " + paramgraphs[i].value);
     // console.log(i + " " + paramgraphs[i].color);
     // paramgraphs[i].color = "blue";
     // console.log(i + " " + paramgraphs[i].color);
+
     paramgraphs[i].draw();
+  }
+}
+
+function updateParamValues(){
+  for (let i = 0; i < paramgraphs.length; i++){
+    paramgraphs[i].updateValue();
   }
 }
 
