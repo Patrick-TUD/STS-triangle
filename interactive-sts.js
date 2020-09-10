@@ -193,6 +193,8 @@ function clearCanvas(){
 
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "aliceblue";
+  ctx.fillRect(center_width-500, 20, 1000, canvas.height-40);
 }
 
 // Draw the STS triangle with corner annotations.
