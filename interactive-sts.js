@@ -62,15 +62,25 @@ function point_in_triangle(px,py,ax,ay,bx,by,cx,cy){
 //credit: https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr(x) { return x * x }
 function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
-function distToSegmentSquared(p, v, w) {
-  var l2 = dist2(v, w);
-  if (l2 == 0) return dist2(p, v);
-  var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
-  t = Math.max(0, Math.min(1, t));
-  return dist2(p, { x: v.x + t * (w.x - v.x),
-                    y: v.y + t * (w.y - v.y) });
+rgb// function distToSegmentSquared(p, v, w) {
+//   var l2 = dist2(v, w);
+//   if (l2 == 0) return dist2(p, v);
+//   var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+//   t = Math.max(0, Math.min(1, t));
+//   return dist2(p, { x: v.x + t * (w.x - v.x),
+//                     y: v.y + t * (w.y - v.y) });
+// }
+// function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
+function distToSegment(p, v, w) { return Math.sqrt(dist2(p, pointOnLine(p, v, w))); }
+
+function pointOnLine(p, v, w){
+  var l2 = dist2(v, w); // Calculate squared length of line segment
+  if (l2 == 0) return v;  // Squared length = 0? Point on line is one of the endpoints.
+  var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;   // Calculate length t along line closest to point p.
+  t = Math.max(0, Math.min(1, t));  // Limit to the line segment endpoints.
+  return {  x: v.x + t * (w.x - v.x),
+            y: v.y + t * (w.y - v.y) }; // Return the point on the line segment closest to point p.
 }
-function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
 
 function distance_to_line(px, py, ax, ay, bx, by){
   return distToSegment({x: px, y: py}, {x: ax, y: ay}, {x: bx, y: by});
@@ -264,8 +274,33 @@ function drawTriangle(){
   ctx.lineTo(bx, by);
   ctx.stroke();
 
+  //Thin colored lines from input point to aspect edges.
+  if (mouse_x != null){
+    ctx.beginPath();
+    ctx.moveTo(mouse_x, mouse_y);
+    var p_service = pointOnLine({x: mouse_x, y: mouse_y}, {x: ax, y: ay}, {x: cx, y: cy});
+    ctx.lineTo(p_service.x, p_service.y);
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(mouse_x, mouse_y);
+    var p_social = pointOnLine({x: mouse_x, y: mouse_y}, {x: bx, y: by}, {x: cx, y: cy});
+    ctx.lineTo(p_social.x, p_social.y);
+    ctx.strokeStyle = "green";
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(mouse_x, mouse_y);
+    var p_technology = pointOnLine({x: mouse_x, y: mouse_y}, {x: bx, y: by}, {x: ax, y: ay});
+    ctx.lineTo(p_technology.x, p_technology.y);
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+  }
+
   // beginPath to make sure previous lines are decoupled from the next.
   ctx.beginPath();
+
 }
 
 function drawSTSGraphs(){
