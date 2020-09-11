@@ -8,23 +8,30 @@
     <title>STS Triangle</title>
   </head>
   <body>
-    <div>
-      <h1>
-        <br>
-        The Social, Technology and Service triangle.
-      </h1>
+
+    <header>
+      <a href="https://www.tudelft.nl/en/" ><img class="logo" src="TUDelft_logo.svg" alt="logo"></a>
+      <nav>
+        <ul class="nav__links">
+          <li><a href="#">The Social, Technology and Service triangle.</a></li>
+          <!-- <li><a href="#">Projects</a></li>
+          <li><a href="#">About</a></li> -->
+        </ul>
+      </nav>
+      <a class="cta" href="#"><button>Go to Paper</button></a>
+    </header>
+
+
+
+    <canvas id="canvas"></canvas>
+    <script src="interactive-sts.js"></script>
+    <div id="content">
       <p>
         Click or drag within the triangle to see the robot behavioural parameters change accordingly.*
       </p>
       <p style="font-size:80%;"><br>
         This demonstration is part of the paper 'url: Designing Socially Adaptive Behaviour for Mobile Robots'.
       </p>
-    <!-- </div>
-    <div> -->
-      <canvas id="canvas"></canvas>
-    <!-- </div> -->
-    <script src="interactive-sts.js"></script>
-    <!-- <div> -->
       <p style="font-size:80%;"><br>
         *This is a demonstration of what the STS triangle is envisioned to produce.<br>
         As such, shown parameter relations are not necessarily accurate nor representative.

@@ -1,6 +1,7 @@
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext('2d');
 
+let canvas_top = 175;
 let center_width = null;
 let center_height = null;
 let triangle_side_length = 250;
@@ -103,8 +104,8 @@ function resizeCanvas(){
 window.addEventListener('load', init)
 
 function init(){
-  canvas.style.position = 'absolute';
-  canvas.style.top = "175px";
+  // canvas.style.position = 'absolute';
+  canvas.style.top = `${canvas_top}px`;
 
   for (let i = 0; i < parameter_graph_count; i++){
     paramgraphs.push(new ParamGraph(graph_properties[i][1], 0, 0, graph_properties[i][0], graph_properties[i][2], graph_properties[i][3], graph_properties[i][4], graph_properties[i][5]));
@@ -165,7 +166,7 @@ function drag(e){
   // ctx.lineCap = 'round';
   
   mouse_x = e.clientX;
-  mouse_y = e.clientY-175;
+  mouse_y = e.clientY-canvas_top;
   if (point_in_triangle( mouse_x, mouse_y, ax, ay, bx, by, cx, cy)){
     // console.log(distance_to_line(mouse_x, mouse_y, ax, ay, bx, by));
     technology_dis = distance_to_line(mouse_x, mouse_y, ax, ay, bx, by) / height;
