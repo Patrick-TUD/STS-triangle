@@ -62,7 +62,7 @@ function point_in_triangle(px,py,ax,ay,bx,by,cx,cy){
 //credit: https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment
 function sqr(x) { return x * x }
 function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
-rgb// function distToSegmentSquared(p, v, w) {
+// function distToSegmentSquared(p, v, w) {
 //   var l2 = dist2(v, w);
 //   if (l2 == 0) return dist2(p, v);
 //   var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
