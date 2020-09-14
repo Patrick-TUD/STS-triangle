@@ -15,7 +15,7 @@ let parameter_graphs_per_line = parameter_graph_count/2;
 let parameter_description = "";
 let parameter_description_col = "black";
 let parameter_description_xpos = center_width;
-let parameter_description_ypos = 60;
+let parameter_description_ypos = null;
 
 const graph_properties = [];
 // [0; color, 1; name, 2; base value, 3; social factor, 4; technology factor, 5; service factor, description]
@@ -113,7 +113,7 @@ function resizeCanvas(){
   }
 
   parameter_description_xpos = Math.floor(canvas.width/2)-40+Math.floor(parameter_graphs_per_line/2) * graph_h_spacing;
-  parameter_description_ypos = Math.floor(canvas.height/3)-120;
+  parameter_description_ypos = Math.floor(canvas.height/3)-128;
 
   updateCanvas();
 }
@@ -459,11 +459,16 @@ function updateParamValues(){
 
 function drawParameterDescription() {
   ctx.font = '16px "Arial"';
-  ctx.fillStyle = parameter_description_col;
-  ctx.textBaseline = "bottom";
+  ctx.textBaseline = "middle";
   ctx.textAlign = "center";
+  // Rectangle below text.
+  ctx.fillStyle = "white";
+  let text_width = ctx.measureText(parameter_description).width+20;
+  let text_height = 25;
+  ctx.fillRect(parameter_description_xpos-Math.ceil(text_width/2), parameter_description_ypos-Math.floor(text_height/2)-3, Math.ceil(text_width), text_height);
+  // Description text itself.
+  ctx.fillStyle = parameter_description_col;
   ctx.fillText(parameter_description, parameter_description_xpos, parameter_description_ypos);
-  // ctx.fillText("parameter_description", center_width, 30);
 }
 
 // EventListeners
