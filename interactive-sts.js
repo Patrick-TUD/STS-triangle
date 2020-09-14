@@ -1,7 +1,7 @@
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext('2d');
 
-let canvas_top = 175;
+let canvas_top = 200;
 let center_width = null;
 let center_height = null;
 let triangle_side_length = 250;
