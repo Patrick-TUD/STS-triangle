@@ -458,17 +458,19 @@ function updateParamValues(){
 }
 
 function drawParameterDescription() {
-  ctx.font = '16px "Arial"';
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  // Rectangle below text.
-  ctx.fillStyle = "white";
-  let text_width = ctx.measureText(parameter_description).width+20;
-  let text_height = 25;
-  ctx.fillRect(parameter_description_xpos-Math.ceil(text_width/2), parameter_description_ypos-Math.floor(text_height/2)-3, Math.ceil(text_width), text_height);
-  // Description text itself.
-  ctx.fillStyle = parameter_description_col;
-  ctx.fillText(parameter_description, parameter_description_xpos, parameter_description_ypos);
+  if (parameter_description != ""){
+    ctx.font = '16px "Arial"';
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    // Rectangle below text.
+    ctx.fillStyle = "white";
+    let text_width = ctx.measureText(parameter_description).width+20;
+    let text_height = 25;
+    ctx.fillRect(parameter_description_xpos-Math.ceil(text_width/2), parameter_description_ypos-Math.floor(text_height/2)-3, Math.ceil(text_width), text_height);
+    // Description text itself.
+    ctx.fillStyle = parameter_description_col;
+    ctx.fillText(parameter_description, parameter_description_xpos, parameter_description_ypos);
+  }
 }
 
 // EventListeners
