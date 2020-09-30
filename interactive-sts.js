@@ -413,6 +413,7 @@ function ParamGraph(name, xpos, ypos, color, base, social_val, technology_val, s
     ctx.fillRect(this.xpos-1, this.ypos-this.bar_height, 2, this.bar_height);
     ctx.globalAlpha = 1;
     ctx.fillRect(this.xpos-this.bar_width/2, this.ypos-this.value*this.bar_height, this.bar_width, this.bar_height*this.value);
+    ctx.fillText(this.value.toFixed(3), this.xpos, this.ypos-this.bar_height*this.value);
     ctx.save();
     ctx.translate(this.xpos+5, this.ypos+15);
     let angle_div = map(Math.min(canvas.height, 800), 500, 800, 10, 3);
