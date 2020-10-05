@@ -2,7 +2,7 @@
 
 ---
 
-The interactive web demonstration can be found at https://patrick-tud.github.io/STS-triangle/.
+The interactive web demonstration can be found at https://RT-patrick.github.io/STS-triangle/.
 
 Click or drag within the triangle to see the robot behavioural parameters change accordingly.\*
 This demonstration is part of the paper 'url: Designing Socially Adaptive Behaviour for Mobile Robots'.
